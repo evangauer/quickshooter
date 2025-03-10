@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wild West Quickdraw</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game">
+        <!-- Fixed sky background -->
+        <div id="sky">
+            <div class="cloud" style="top: 50px; left: -50px; width: 100px; height: 40px; animation-duration: 30s;"></div>
+            <div class="cloud" style="top: 100px; left: -100px; width: 80px; height: 30px; animation-duration: 25s;"></div>
+            <div class="cloud" style="top: 150px; left: -80px; width: 120px; height: 50px; animation-duration: 35s;"></div>
+        </div>
+
+        <!-- Rotating scene -->
+        <div id="scene">
+            <!-- Initial view: facing the saloon -->
+            <div id="view-initial">
+                <div class="building saloon" style="left: 150px; width: 200px; height: 250px;">
+                    <div class="window" style="left: 30px; top: 60px;"></div>
+                    <div class="window" style="left: 120px; top: 60px;"></div>
+                    <div class="door double-door" style="left: 70px; bottom: 0;"></div>
+                    <div class="sign">Saloon</div>
+                    <!-- Inside #view-turnaround -->
+<div class="cactus" style="left: 600px; bottom: 0;"></div>
+                </div>
+                <div class="building" style="left: 400px; width: 150px; height: 200px;">
+                    <div class="window" style="left: 30px; top: 50px;"></div>
+                    <div class="door" style="left: 60px; bottom: 0;"></div>
+                    <div class="sign">Sheriff</div>
+                </div>
+                <div class="street"></div>
+                <div class="tumbleweed" style="left: 100px; bottom: 60px; animation-delay: 0s;"></div>
+                <div class="tumbleweed" style="left: 500px; bottom: 60px; animation-delay: 3s;"></div>
+            </div>
+
+            <!-- Turnaround view: facing the AI cowboy -->
+            <div id="view-turnaround">
+                <div class="building" style="left: 100px; width: 180px; height: 220px;">
+                    <div class="window" style="left: 40px; top: 60px;"></div>
+                    <div class="door" style="left: 70px; bottom: 0;"></div>
+                    <div class="sign">Bank</div>
+                </div>
+                <div class="building" style="left: 350px; width: 200px; height: 240px;">
+                    <div class="window" style="left: 50px; top: 70px;"></div>
+                    <div class="window" style="left: 120px; top: 70px;"></div>
+                    <div class="door" style="left: 80px; bottom: 0;"></div>
+                    <div class="sign">Hotel</div>
+                </div>
+                <div class="street"></div>
+                <div class="cowboy ai" style="bottom: 60px;"></div>
+                <div class="tumbleweed" style="left: 200px; bottom: 60px; animation-delay: 1s;"></div>
+            </div>
+        </div>
+
+        <!-- UI Elements -->
+        <div id="message"></div>
+        <div id="bang">BANG!</div>
+        <button id="restart" style="display: none;">Play Again</button>
+        <div id="reaction-time" style="display: none;"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

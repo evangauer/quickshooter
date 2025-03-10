@@ -1,0 +1,220 @@
+body {
+    margin: 0;
+    background: #f0f0f0;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#game {
+    position: relative;
+    width: 900px;
+    height: 600px;
+    margin: 20px auto;
+    overflow: hidden;
+    border: 2px solid #333;
+}
+
+#sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #87CEEB, #B0E0E6);
+    z-index: 1;
+}
+
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: drift linear infinite;
+}
+
+@keyframes drift {
+    0% { transform: translateX(-150px); }
+    100% { transform: translateX(1000px); }
+}
+
+#scene {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.8s ease-in-out;
+    z-index: 2;
+}
+
+#view-initial, #view-turnaround {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+#view-turnaround {
+    transform: rotateY(180deg);
+}
+
+.building {
+    position: absolute;
+    background: #8B4513; /* Saddle brown */
+    border: 2px solid #654321;
+}
+
+.saloon {
+    background: #A0522D; /* Sienna */
+}
+
+.window {
+    position: absolute;
+    width: 30px;
+    height: 40px;
+    background: #ADD8E6; /* Light blue */
+    border: 1px solid #4682B4;
+}
+
+.door {
+    position: absolute;
+    width: 50px;
+    height: 80px;
+    background: #654321; /* Dark brown */
+    border: 1px solid #3C2F2F;
+}
+
+.double-door {
+    width: 80px;
+    background: linear-gradient(to right, #654321 48%, #3C2F2F 48%, #3C2F2F 52%, #654321 52%);
+}
+
+.cactus {
+    position: absolute;
+    width: 50px;
+    height: 100px;
+    background: #228B22; /* Forest green */
+    border-radius: 10px;
+    bottom: 0; /* Sits on the ground */
+}
+
+.sign {
+    position: absolute;
+    top: -40px;
+    left: 20px;
+    width: 120px;
+    height: 25px;
+    background: #FFF8DC; /* Cornsilk */
+    text-align: center;
+    line-height: 25px;
+    border: 2px solid #000;
+    font-weight: bold;
+}
+
+.street {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background: #DEB887; /* Burlywood */
+    border-top: 2px dashed #8B4513;
+}
+
+.tumbleweed {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #8B4513;
+    border-radius: 50%;
+    animation: roll 12s linear infinite;
+}
+
+@keyframes roll {
+    0% { transform: translateX(0) rotate(0deg); }
+    100% { transform: translateX(900px) rotate(720deg); }
+}
+
+.cowboy {
+    position: absolute;
+    width: 60px;
+    height: 120px;
+    background: #4682B4; /* Steel blue */
+    transition: background 0.2s;
+}
+
+.cowboy::before {
+    content: '';
+    position: absolute;
+    top: -25px;
+    left: 10px;
+    width: 40px;
+    height: 25px;
+    background: #000; /* Black hat */
+    border-radius: 10px 10px 0 0;
+}
+
+.cowboy.hit {
+    background: #FF4500; /* OrangeRed */
+}
+
+#message {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 28px;
+    color: #FFD700; /* Gold */
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px 30px;
+    border-radius: 5px;
+    z-index: 3;
+    text-shadow: 2px 2px 4px #000;
+}
+
+#bang {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 120px;
+    color: #FF0000; /* Red */
+    text-shadow: 4px 4px 8px #000;
+    display: none;
+    z-index: 4;
+    animation: flash 0.2s;
+}
+
+@keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+#restart {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 30px;
+    font-size: 18px;
+    background: #DAA520; /* Goldenrod */
+    border: 2px solid #8B4513;
+    cursor: pointer;
+    z-index: 3;
+}
+
+#restart:hover {
+    background: #FFD700;
+}
+
+#reaction-time {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: #FFF;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    z-index: 3;
+}

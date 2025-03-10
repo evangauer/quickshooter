@@ -1,0 +1,129 @@
+const scene = document.getElementById('scene');
+const viewTurnaround = document.getElementById('view-turnaround');
+const message = document.getElementById('message');
+const bang = document.getElementById('bang');
+const restartButton = document.getElementById('restart');
+const reactionTimeDisplay = document.getElementById('reaction-time');
+const aiCowboy = document.querySelector('.cowboy.ai');
+
+let gameState = 'waiting';
+let canShoot = false;
+let tStart;
+let difficulty = 'medium'; // Could be expanded to a selector
+
+const difficultySettings = {
+    easy: { minDelay: 1000, maxDelay: 2000, accuracy: 0.6 },
+    medium: { minDelay: 500, maxDelay: 1500, accuracy: 0.8 },
+    hard: { minDelay: 300, maxDelay: 1000, accuracy: 0.95 }
+};
+
+// Function to position the AI cowboy randomly
+function positionAICowboy() {
+    // Random horizontal position between 150px and 650px (to keep within visible area)
+    const randomX = Math.floor(Math.random() * 500) + 150;
+    aiCowboy.style.left = randomX + 'px';
+    // Reset any transform that might have been applied (like when hit)
+    aiCowboy.style.transform = 'none';
+}
+
+function startGame() {
+    gameState = 'waiting';
+    canShoot = false;
+    
+    // Position the AI cowboy randomly for this game
+    positionAICowboy();
+    
+    // Reset cowboy appearance
+    aiCowboy.classList.remove('hit');
+    
+    // Reset scene rotation
+    scene.style.transform = 'rotateY(0deg)';
+    
+    // Hide UI elements
+    bang.style.display = 'none';
+    restartButton.style.display = 'none';
+    reactionTimeDisplay.style.display = 'none';
+    
+    // Show "Get ready" message
+    message.textContent = 'Get ready...';
+    message.style.display = 'block';
+    
+    // Random delay before "DRAW!"
+    const readyDelay = Math.random() * 3000 + 2000; // 2-5 seconds
+    
+    setTimeout(() => {
+        if (gameState === 'waiting') {
+            gameState = 'draw';
+            message.textContent = 'DRAW!';
+            
+            // Rotate the scene to face the AI cowboy
+            scene.style.transform = 'rotateY(180deg)';
+            
+            // Record start time for reaction measurement
+            tStart = Date.now();
+            
+            // Now player can shoot
+            canShoot = true;
+            
+            // AI will shoot after a delay based on difficulty
+            const settings = difficultySettings[difficulty];
+            const aiDelay = Math.random() * (settings.maxDelay - settings.minDelay) + settings.minDelay;
+            
+            setTimeout(() => {
+                if (gameState === 'draw') {
+                    // AI shoots if player hasn't yet
+                    const aiHits = Math.random() < settings.accuracy;
+                    
+                    if (aiHits) {
+                        gameState = 'aiWin';
+                        message.textContent = 'You lost!';
+                        showBang();
+                    }
+                }
+            }, aiDelay);
+        }
+    }, readyDelay);
+}
+
+// Event listener for player shooting (clicking)
+document.addEventListener('click', () => {
+    if (gameState === 'waiting') {
+        // Player shot too early
+        gameState = 'falseStart';
+        message.textContent = 'False start! You shot too early.';
+        restartButton.style.display = 'block';
+    } else if (gameState === 'draw' && canShoot) {
+        // Player shot during draw phase
+        gameState = 'playerWin';
+        
+        // Calculate reaction time
+        const reactionTime = (Date.now() - tStart) / 1000;
+        
+        // Show reaction time
+        reactionTimeDisplay.textContent = `Reaction time: ${reactionTime.toFixed(2)} seconds`;
+        reactionTimeDisplay.style.display = 'block';
+        
+        // Show hit effect on AI cowboy
+        aiCowboy.classList.add('hit');
+        
+        // Show success message
+        message.textContent = 'You shot the AI!';
+        
+        // Show bang effect
+        showBang();
+    }
+});
+
+function showBang() {
+    bang.style.display = 'block';
+    setTimeout(() => {
+        bang.style.display = 'none';
+        restartButton.style.display = 'block';
+    }, 500);
+}
+
+// Restart button event listener
+restartButton.addEventListener('click', startGame);
+
+// Start the game when page loads
+window.addEventListener('load', startGame);

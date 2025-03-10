@@ -11,6 +11,7 @@ body {
     margin: 20px auto;
     overflow: hidden;
     border: 2px solid #333;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 #sky {
@@ -28,6 +29,7 @@ body {
     background: rgba(255, 255, 255, 0.8);
     border-radius: 50%;
     animation: drift linear infinite;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 @keyframes drift {
@@ -61,10 +63,38 @@ body {
     position: absolute;
     background: #8B4513; /* Saddle brown */
     border: 2px solid #654321;
+    border-bottom: none; /* Remove bottom border to connect with ground */
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    /* Ensure buildings connect to the ground */
+    bottom: 120px; /* Match the street height */
+}
+
+.building::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect x="0" y="0" width="50" height="10" fill="rgba(0,0,0,0.1)"/><rect x="50" y="10" width="50" height="10" fill="rgba(0,0,0,0.1)"/><rect x="0" y="20" width="50" height="10" fill="rgba(0,0,0,0.1)"/><rect x="50" y="30" width="50" height="10" fill="rgba(0,0,0,0.1)"/><rect x="0" y="40" width="50" height="10" fill="rgba(0,0,0,0.1)"/><rect x="50" y="50" width="50" height="10" fill="rgba(0,0,0,0.1)"/><rect x="0" y="60" width="50" height="10" fill="rgba(0,0,0,0.1)"/><rect x="50" y="70" width="50" height="10" fill="rgba(0,0,0,0.1)"/><rect x="0" y="80" width="50" height="10" fill="rgba(0,0,0,0.1)"/><rect x="50" y="90" width="50" height="10" fill="rgba(0,0,0,0.1)"/></svg>');
+    opacity: 0.3;
+    pointer-events: none;
 }
 
 .saloon {
     background: #A0522D; /* Sienna */
+}
+
+.saloon::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: #8B4513;
+    border: 2px solid #654321;
+    border-bottom: none;
 }
 
 .window {
@@ -72,7 +102,28 @@ body {
     width: 30px;
     height: 40px;
     background: #ADD8E6; /* Light blue */
-    border: 1px solid #4682B4;
+    border: 3px solid #4682B4;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.window::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    background: #4682B4;
+}
+
+.window::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #4682B4;
 }
 
 .door {
@@ -80,7 +131,20 @@ body {
     width: 50px;
     height: 80px;
     background: #654321; /* Dark brown */
-    border: 1px solid #3C2F2F;
+    border: 3px solid #3C2F2F;
+    border-bottom: none;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.door::after {
+    content: '';
+    position: absolute;
+    top: 40%;
+    right: 10px;
+    width: 5px;
+    height: 5px;
+    background: #FFD700; /* Gold doorknob */
+    border-radius: 50%;
 }
 
 .double-door {
@@ -88,13 +152,74 @@ body {
     background: linear-gradient(to right, #654321 48%, #3C2F2F 48%, #3C2F2F 52%, #654321 52%);
 }
 
+.double-door::before {
+    content: '';
+    position: absolute;
+    top: 40%;
+    left: 15px;
+    width: 5px;
+    height: 5px;
+    background: #FFD700; /* Gold doorknob */
+    border-radius: 50%;
+}
+
+.double-door::after {
+    right: 15px;
+}
+
 .cactus {
     position: absolute;
-    width: 50px;
+    width: 20px;
     height: 100px;
-    background: #228B22; /* Forest green */
+    background: #228B22;
     border-radius: 10px;
-    bottom: 0; /* Sits on the ground */
+    bottom: 120px;
+    z-index: 2;
+}
+
+.cactus.tall {
+    height: 140px;
+}
+
+.cactus.short {
+    height: 80px;
+}
+
+.cactus::before, .cactus::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 15px;
+    background: #228B22;
+    border-radius: 10px;
+}
+
+.cactus::before {
+    top: 20%;
+    left: -15px;
+    transform: rotate(-5deg);
+}
+
+.cactus::after {
+    top: 60%;
+    right: -15px;
+    transform: rotate(5deg);
+}
+
+.cactus.tall::before {
+    top: 30%;
+}
+
+.cactus.tall::after {
+    top: 70%;
+}
+
+.cactus.short::before {
+    top: 25%;
+}
+
+.cactus.short::after {
+    top: 55%;
 }
 
 .sign {
@@ -108,6 +233,19 @@ body {
     line-height: 25px;
     border: 2px solid #000;
     font-weight: bold;
+    transform: rotate(-2deg);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.sign::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 10px;
+    width: 100px;
+    height: 2px;
+    background: #000;
+    transform: rotate(2deg);
 }
 
 .street {
@@ -118,76 +256,216 @@ body {
     height: 120px;
     background: #DEB887; /* Burlywood */
     border-top: 2px dashed #8B4513;
+    background-image: 
+        linear-gradient(90deg, rgba(139, 69, 19, 0.1) 50%, transparent 50%),
+        linear-gradient(rgba(139, 69, 19, 0.1) 50%, transparent 50%);
+    background-size: 20px 20px;
+}
+
+.street::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="10" cy="10" r="2" fill="rgba(0,0,0,0.1)"/><circle cx="30" cy="40" r="1" fill="rgba(0,0,0,0.1)"/><circle cx="50" cy="20" r="2" fill="rgba(0,0,0,0.1)"/><circle cx="70" cy="50" r="1" fill="rgba(0,0,0,0.1)"/><circle cx="90" cy="30" r="2" fill="rgba(0,0,0,0.1)"/><circle cx="20" cy="80" r="2" fill="rgba(0,0,0,0.1)"/><circle cx="40" cy="60" r="1" fill="rgba(0,0,0,0.1)"/><circle cx="60" cy="90" r="2" fill="rgba(0,0,0,0.1)"/><circle cx="80" cy="70" r="1" fill="rgba(0,0,0,0.1)"/></svg>');
 }
 
 .tumbleweed {
     position: absolute;
-    width: 40px;
-    height: 40px;
-    background: #8B4513;
-    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    background: url('tumbleweed.png') no-repeat center center;
+    background-size: contain;
     animation: roll 12s linear infinite;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+    image-rendering: pixelated;
+}
+
+/* Remove the old tumbleweed styling */
+.tumbleweed::after {
+    display: none;
 }
 
 @keyframes roll {
-    0% { transform: translateX(0) rotate(0deg); }
-    100% { transform: translateX(900px) rotate(720deg); }
+    0% { 
+        transform: translateX(0) rotate(0deg);
+        opacity: 0.8;
+    }
+    100% { 
+        transform: translateX(900px) rotate(720deg);
+        opacity: 0.8;
+    }
 }
 
 .cowboy {
     position: absolute;
-    width: 60px;
-    height: 120px;
-    background: #4682B4; /* Steel blue */
-    transition: background 0.2s;
+    width: 140px;
+    height: 280px;
+    background: url('cowboy.png') no-repeat center center;
+    background-size: contain;
+    transition: all 0.3s ease-out;
+    bottom: 120px; /* Ensure cowboy is always on the ground */
+    transform-origin: bottom center;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+    image-rendering: pixelated;
+    cursor: crosshair;
 }
 
-.cowboy::before {
+.cowboy.rooftop {
+    bottom: 320px; /* Position on top of buildings */
+    height: 210px; /* Slightly smaller when on rooftop */
+    transform-origin: bottom center;
+}
+
+.cowboy.peek-right {
+    transform: translateX(60px); /* Peek further out from right side of cover */
+}
+
+.cowboy.peek-left {
+    transform: translateX(-60px); /* Peek further out from left side of cover */
+}
+
+/* Rooftop cover styling */
+.rooftop-cover {
+    position: absolute;
+    width: 160px; /* Wider to better hide cowboy */
+    height: 60px; /* Taller to show more of the rooftop edge */
+    background: #8B4513;
+    border: 2px solid #654321;
+    bottom: 320px; /* Match cowboy rooftop position */
+    z-index: 2;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.rooftop-cover::before {
     content: '';
     position: absolute;
-    top: -25px;
-    left: 10px;
-    width: 40px;
-    height: 25px;
-    background: #000; /* Black hat */
-    border-radius: 10px 10px 0 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: #654321;
+    border-radius: 2px 2px 0 0;
 }
 
-.cowboy.hit {
-    background: #FF4500; /* OrangeRed */
+.barrel {
+    position: absolute;
+    width: 60px;
+    height: 80px;
+    background: url('barrel.png') no-repeat center center;
+    background-size: contain;
+    image-rendering: pixelated;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
 }
 
+/* Remove old barrel styling */
+.barrel::before, .barrel::after {
+    display: none;
+}
+
+.barrel-cover {
+    position: absolute;
+    width: 120px;
+    height: 140px;
+    background: url('barrel.png') no-repeat center center;
+    background-size: contain;
+    image-rendering: pixelated;
+    bottom: 120px; /* Ensure barrel is always on the ground */
+    z-index: 2;
+    filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.3));
+}
+
+/* Remove old barrel-cover styling */
+.barrel-cover::before, .barrel-cover::after {
+    display: none;
+}
+
+/* Score display */
+#score-display {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    z-index: 100;
+    min-width: 150px;
+    text-align: right;
+}
+
+/* Message display - less intrusive */
 #message {
     position: absolute;
-    top: 40%;
+    bottom: 20px;
     left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 28px;
-    color: #FFD700; /* Gold */
+    transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.7);
-    padding: 15px 30px;
+    color: white;
+    padding: 10px 20px;
     border-radius: 5px;
-    z-index: 3;
-    text-shadow: 2px 2px 4px #000;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 100;
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Don't block clicks */
 }
 
+/* Cowboy count indicator */
+.cowboy-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: #FFD700;
+    border-radius: 50%;
+    margin-left: 3px;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.7);
+}
+
+/* Comic-style BANG effect */
+.comic-bang {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,0 L55,20 L75,10 L65,30 L95,30 L70,45 L95,60 L70,55 L80,80 L55,65 L50,100 L45,65 L20,80 L30,55 L5,60 L30,45 L5,30 L35,30 L25,10 L45,20 Z" fill="%23ff3333" stroke="%23660000" stroke-width="2"/><text x="50" y="55" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="%23ffff00">BANG!</text></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 200;
+    transform: scale(0);
+    animation: bang-pop 0.5s forwards;
+    pointer-events: none;
+}
+
+@keyframes bang-pop {
+    0% { transform: scale(0) rotate(-20deg); }
+    50% { transform: scale(1.2) rotate(10deg); }
+    75% { transform: scale(1.1) rotate(0deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Original BANG display - keep for misses */
 #bang {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 120px;
-    color: #FF0000; /* Red */
-    text-shadow: 4px 4px 8px #000;
+    font-size: 48px;
+    font-weight: bold;
+    color: #FF0000;
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
     display: none;
     z-index: 4;
-    animation: flash 0.2s;
 }
 
 @keyframes flash {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+    10% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+    90% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
 }
 
 #restart {
@@ -201,6 +479,8 @@ body {
     border: 2px solid #8B4513;
     cursor: pointer;
     z-index: 3;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
 }
 
 #restart:hover {
@@ -217,4 +497,334 @@ body {
     background: rgba(0, 0, 0, 0.7);
     padding: 10px;
     z-index: 3;
+}
+
+.sun {
+    position: absolute;
+    top: 50px;
+    right: 100px;
+    width: 80px;
+    height: 80px;
+    background: #FFD700;
+    border-radius: 50%;
+    box-shadow: 0 0 30px #FFD700;
+}
+
+.sun::after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.5) 0%, rgba(255, 215, 0, 0) 70%);
+    border-radius: 50%;
+}
+
+.general-store {
+    background: #8B4513;
+}
+
+.blacksmith {
+    background: #5C4033;
+}
+
+.blacksmith::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    right: 30px;
+    width: 20px;
+    height: 30px;
+    background: #333;
+    border-radius: 5px;
+}
+
+.anvil {
+    position: absolute;
+    width: 30px;
+    height: 15px;
+    background: #333;
+    border-radius: 2px;
+}
+
+.water-trough {
+    position: absolute;
+    width: 100px;
+    height: 20px;
+    background: #8B4513;
+    border: 2px solid #654321;
+}
+
+.water-trough::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: calc(100% - 4px);
+    height: calc(100% - 8px);
+    background: #ADD8E6;
+    opacity: 0.7;
+}
+
+.hitching-post {
+    position: absolute;
+    width: 80px;
+    height: 40px;
+}
+
+.hitching-post::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    bottom: 0;
+    width: 5px;
+    height: 40px;
+    background: #8B4513;
+}
+
+.hitching-post::after {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 5px;
+    width: 60px;
+    height: 5px;
+    background: #8B4513;
+}
+
+.wanted-poster {
+    position: absolute;
+    width: 40px;
+    height: 60px;
+    background: #FFF8DC;
+    border: 1px solid #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3px;
+}
+
+.wanted-poster::before {
+    content: 'WANTED';
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 100%;
+    font-size: 6px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.wanted-poster::after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 5px;
+    width: 30px;
+    height: 35px;
+    background: url('cowboy.png') no-repeat center center;
+    background-size: contain;
+    image-rendering: pixelated;
+}
+
+.wagon-wheel {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 5px solid #654321;
+    border-radius: 50%;
+}
+
+.wagon-wheel::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: radial-gradient(circle, transparent 40%, #654321 40%, #654321 45%, transparent 45%);
+}
+
+.wagon-wheel::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: -5px;
+    width: 50px;
+    height: 5px;
+    background: #654321;
+    transform: rotate(45deg);
+    transform-origin: center;
+    box-shadow: 0 0 0 5px transparent, 0 0 0 10px #654321, 0 0 0 15px transparent, 0 0 0 20px #654321;
+}
+
+.cowboy.hit {
+    filter: brightness(1.5) sepia(1) hue-rotate(-50deg) saturate(5) drop-shadow(2px 2px 4px rgba(255, 0, 0, 0.5));
+    opacity: 0.9;
+    transform: rotate(15deg) scale(0.95);
+}
+
+/* Points display */
+.points-popup {
+    position: absolute;
+    color: #FFD700;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    pointer-events: none;
+    transition: all 1s ease-out;
+    transform: translateY(0);
+}
+
+/* Level display */
+#level-display {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    z-index: 100;
+}
+
+/* Health Bar */
+#health-bar {
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    display: flex;
+    gap: 5px;
+    z-index: 100;
+}
+
+.health-point {
+    width: 30px;
+    height: 30px;
+    background: #333;
+    border: 2px solid #000;
+    border-radius: 50%;
+    position: relative;
+}
+
+.health-point.active {
+    background: #ff3333;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+}
+
+.health-point.active::before {
+    content: '♥';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 16px;
+}
+
+/* Ammo Counter - Revolver Cylinder Style */
+#ammo-counter {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+    background: #777;
+    border-radius: 50%;
+    border: 3px solid #444;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    position: relative;
+}
+
+#ammo-counter::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #555;
+    border-radius: 50%;
+    border: 2px solid #333;
+    z-index: 2;
+}
+
+.bullet {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: #333;
+    border-radius: 50%;
+    border: 1px solid #222;
+}
+
+.bullet:nth-child(1) { transform: rotate(0deg) translate(0, -25px); }
+.bullet:nth-child(2) { transform: rotate(60deg) translate(0, -25px); }
+.bullet:nth-child(3) { transform: rotate(120deg) translate(0, -25px); }
+.bullet:nth-child(4) { transform: rotate(180deg) translate(0, -25px); }
+.bullet:nth-child(5) { transform: rotate(240deg) translate(0, -25px); }
+.bullet:nth-child(6) { transform: rotate(300deg) translate(0, -25px); }
+
+.bullet.active {
+    background: #FFD700;
+    border: 1px solid #B8860B;
+    box-shadow: inset 0 0 5px rgba(255, 215, 0, 0.7);
+}
+
+.bullet.active::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    background: #B8860B;
+    border-radius: 50%;
+}
+
+/* Revolver Cylinder Animation */
+@keyframes revolve {
+    0% { transform: translateX(-50%) rotate(0deg); }
+    20% { transform: translateX(-50%) rotate(60deg); }
+    100% { transform: translateX(-50%) rotate(60deg); }
+}
+
+#ammo-counter.revolve {
+    animation: revolve 0.3s ease-out;
+}
+
+/* Injury Overlay */
+#injury-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 90;
+    box-shadow: inset 0 0 100px rgba(255, 0, 0, 0);
+    transition: box-shadow 0.5s ease;
+}
+
+#injury-overlay.injured {
+    box-shadow: inset 0 0 100px rgba(255, 0, 0, 0.7);
+}
+
+#injury-overlay.critical {
+    box-shadow: inset 0 0 150px rgba(255, 0, 0, 0.9);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: inset 0 0 150px rgba(255, 0, 0, 0.7); }
+    50% { box-shadow: inset 0 0 150px rgba(255, 0, 0, 0.9); }
+    100% { box-shadow: inset 0 0 150px rgba(255, 0, 0, 0.7); }
 }

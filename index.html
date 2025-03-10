@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wild West Quickdraw</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="game">
@@ -13,6 +13,10 @@
             <div class="cloud" style="top: 50px; left: -50px; width: 100px; height: 40px; animation-duration: 30s;"></div>
             <div class="cloud" style="top: 100px; left: -100px; width: 80px; height: 30px; animation-duration: 25s;"></div>
             <div class="cloud" style="top: 150px; left: -80px; width: 120px; height: 50px; animation-duration: 35s;"></div>
+            <div class="cloud" style="top: 80px; left: -150px; width: 90px; height: 35px; animation-duration: 28s;"></div>
+            <div class="cloud" style="top: 180px; left: -120px; width: 110px; height: 45px; animation-duration: 32s;"></div>
+            <!-- Sun -->
+            <div class="sun"></div>
         </div>
 
         <!-- Rotating scene -->
@@ -22,16 +26,31 @@
                 <div class="building saloon" style="left: 150px; width: 200px; height: 250px;">
                     <div class="window" style="left: 30px; top: 60px;"></div>
                     <div class="window" style="left: 120px; top: 60px;"></div>
+                    <div class="window" style="left: 30px; top: 140px;"></div>
+                    <div class="window" style="left: 120px; top: 140px;"></div>
                     <div class="door double-door" style="left: 70px; bottom: 0;"></div>
                     <div class="sign">Saloon</div>
-                    <!-- Inside #view-turnaround -->
-<div class="cactus" style="left: 600px; bottom: 0;"></div>
                 </div>
                 <div class="building" style="left: 400px; width: 150px; height: 200px;">
                     <div class="window" style="left: 30px; top: 50px;"></div>
+                    <div class="window" style="left: 90px; top: 50px;"></div>
                     <div class="door" style="left: 60px; bottom: 0;"></div>
                     <div class="sign">Sheriff</div>
+                    <div class="wanted-poster" style="left: 20px; top: 120px;"></div>
                 </div>
+                <div class="building general-store" style="left: 600px; width: 180px; height: 220px;">
+                    <div class="window" style="left: 40px; top: 60px;"></div>
+                    <div class="window" style="left: 110px; top: 60px;"></div>
+                    <div class="door" style="left: 70px; bottom: 0;"></div>
+                    <div class="sign">General Store</div>
+                </div>
+                <div class="cactus tall" style="left: 50px; bottom: 120px;"></div>
+                <div class="cactus" style="left: 750px; bottom: 120px;"></div>
+                <div class="cactus short" style="left: 820px; bottom: 120px;"></div>
+                <div class="barrel" style="left: 350px; bottom: 120px;"></div>
+                <div class="barrel" style="left: 370px; bottom: 120px;"></div>
+                <div class="water-trough" style="left: 550px; bottom: 120px;"></div>
+                <div class="hitching-post" style="left: 250px; bottom: 120px;"></div>
                 <div class="street"></div>
                 <div class="tumbleweed" style="left: 100px; bottom: 60px; animation-delay: 0s;"></div>
                 <div class="tumbleweed" style="left: 500px; bottom: 60px; animation-delay: 3s;"></div>
@@ -41,22 +60,54 @@
             <div id="view-turnaround">
                 <div class="building" style="left: 100px; width: 180px; height: 220px;">
                     <div class="window" style="left: 40px; top: 60px;"></div>
+                    <div class="window" style="left: 110px; top: 60px;"></div>
+                    <div class="window" style="left: 40px; top: 140px;"></div>
+                    <div class="window" style="left: 110px; top: 140px;"></div>
                     <div class="door" style="left: 70px; bottom: 0;"></div>
                     <div class="sign">Bank</div>
                 </div>
                 <div class="building" style="left: 350px; width: 200px; height: 240px;">
                     <div class="window" style="left: 50px; top: 70px;"></div>
                     <div class="window" style="left: 120px; top: 70px;"></div>
+                    <div class="window" style="left: 50px; top: 150px;"></div>
+                    <div class="window" style="left: 120px; top: 150px;"></div>
                     <div class="door" style="left: 80px; bottom: 0;"></div>
                     <div class="sign">Hotel</div>
                 </div>
+                <div class="building blacksmith" style="left: 600px; width: 170px; height: 210px;">
+                    <div class="window" style="left: 40px; top: 60px;"></div>
+                    <div class="door" style="left: 70px; bottom: 0;"></div>
+                    <div class="sign">Blacksmith</div>
+                    <div class="anvil" style="left: 30px; bottom: 0;"></div>
+                </div>
+                <div class="cactus tall" style="left: 50px; bottom: 120px;"></div>
+                <div class="cactus" style="left: 750px; bottom: 120px;"></div>
+                <div class="cactus short" style="left: 820px; bottom: 120px;"></div>
+                <div class="barrel" style="left: 300px; bottom: 120px;"></div>
+                <div class="wagon-wheel" style="left: 650px; bottom: 120px;"></div>
                 <div class="street"></div>
-                <div class="cowboy ai" style="bottom: 60px;"></div>
+                <div class="cowboy ai"></div>
                 <div class="tumbleweed" style="left: 200px; bottom: 60px; animation-delay: 1s;"></div>
+                <div class="tumbleweed" style="left: 400px; bottom: 60px; animation-delay: 5s;"></div>
             </div>
         </div>
 
         <!-- UI Elements -->
+        <div id="level-display">Level 1</div>
+        <div id="score-display">Score: 0</div>
+        <div id="health-bar">
+            <div class="health-point active"></div>
+            <div class="health-point active"></div>
+        </div>
+        <div id="ammo-counter">
+            <div class="bullet active"></div>
+            <div class="bullet active"></div>
+            <div class="bullet active"></div>
+            <div class="bullet active"></div>
+            <div class="bullet active"></div>
+            <div class="bullet active"></div>
+        </div>
+        <div id="injury-overlay"></div>
         <div id="message"></div>
         <div id="bang">BANG!</div>
         <button id="restart" style="display: none;">Play Again</button>
